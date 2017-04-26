@@ -17,5 +17,9 @@ export default new Router({
       name: 'Todo',
       component: Todo,
     },
+    {
+      path: '/*',
+      redirect: '/hello',
+    },
   ],
 });
