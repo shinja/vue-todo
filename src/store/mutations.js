@@ -1,45 +1,40 @@
 import * as types from './mutations_type';
 
-export const state = {
-  todos: [
-    {
-      content: 'vue.js 2.0',
-      done: true,
-    },
-    {
-      content: 'vuex 2.0',
-      done: false,
-    },
-    {
-      content: 'vue-router 2.0',
-      done: false,
-    },
-    {
-      content: 'vue-resource 2.0',
-      done: false,
-    },
-    {
-      content: 'webpack',
-      done: false,
-    },
-  ],
+const pending = (s) => {
+  const state = s;
+  state.fetchPending = true;
+  state.fetchError = null;
 };
 
-export const mutations = {
+const done = (s, err) => {
+  const state = s;
+  state.fetchPending = false;
+  state.fetchError = err;
+};
 
-  [types.ADD_TODO]: (s, payload) => {
-    s.todos.push({
+export default {
+
+  [types.ADD_TODO]: pending,
+  [types.DELETE_TODO]: pending,
+  [types.TOGGLE_TODO]: pending,
+
+  [`${types.ADD_TODO}_SUCCEEDED`]: (s, payload) => {
+    const state = s;
+    done(state, null);
+    state.todos.push({
       content: payload,
       done: false,
     });
   },
 
-  [types.DELETE_TODO](s, index) {
-    s.todos.splice(index, 1);
+  [`${types.DELETE_TODO}_SUCCEEDED`]: (state, index) => {
+    done(state, null);
+    state.todos.splice(index, 1);
   },
 
-  [types.TOGGLE_TODO](s, index) {
-    const todo = s.todos[index];
+  [`${types.TOGGLE_TODO}_SUCCEEDED`]: (state, index) => {
+    done(state, null);
+    const todo = state.todos[index];
     todo.done = !todo.done;
   },
 
