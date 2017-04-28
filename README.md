@@ -2,6 +2,16 @@
 
 > A todo app via vue-cli.
 
+## Quick Dev startup
+
+```bash
+
+npm install
+
+npm start
+
+```
+
 ## Build Setup
 
 ``` bash
