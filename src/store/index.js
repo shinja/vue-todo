@@ -12,10 +12,17 @@ Vue.use(Vuex);
 const plugins = [createLogger(), VuexPromiseMiddleware];
 
 export default new Vuex.Store({
-  state,
-  mutations,
-  getters,
-  actions,
+
+  /** Use modules in here to make vuex-promise-middleware working. */
+  modules: {
+    todo: {
+      state,
+      mutations,
+      getters,
+      actions,
+    },
+  },
   plugins,
   strict: true,
 });
+

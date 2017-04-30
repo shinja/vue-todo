@@ -30,7 +30,10 @@ export default {
   },
 
   computed: {
-    ...mapState(['fetchPending', 'fetchError']) //can NOT put in data
+    ...mapState({
+      fetchPending: state => state.todo.fetchPending,
+      fetchError: state => state.todo.fetchError
+    }) //can NOT put in data
   },
 
   watch: {

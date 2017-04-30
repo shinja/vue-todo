@@ -51,7 +51,9 @@
         count: 'getTodoCount',
         doneConut: 'getDoneCount',
       }),
-      ...mapState(['todos']) //can NOT put in data
+      ...mapState({
+        todos: (state) => state.todo.todos
+      }) //can NOT put in data
     },
 
     methods: {
