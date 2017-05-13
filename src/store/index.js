@@ -2,10 +2,9 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import createLogger from 'vuex/dist/logger';
 import VuexPromiseMiddleware from 'vuex-promise-middleware';
-import state from './state';
-import mutations from './mutations';
-import * as getters from './getters';
-import * as actions from './actions';
+
+import todo from './TodoModule';
+import ui from './UIModlule';
 
 Vue.use(Vuex);
 
@@ -15,12 +14,8 @@ export default new Vuex.Store({
 
   /** Use modules in here to make vuex-promise-middleware working. */
   modules: {
-    todo: {
-      state,
-      mutations,
-      getters,
-      actions,
-    },
+    ui,
+    todo,
   },
   plugins,
   strict: true,

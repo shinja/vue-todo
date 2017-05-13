@@ -31,8 +31,8 @@ export default {
 
   computed: {
     ...mapState({
-      fetchPending: state => state.todo.fetchPending,
-      fetchError: state => state.todo.fetchError
+      fetchPending: state => state.ui.fetchPending,
+      fetchError: state => state.ui.fetchError
     }) //can NOT put in data
   },
 

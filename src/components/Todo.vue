@@ -7,7 +7,7 @@
         <label>Add a todo...</label>
         <md-input v-model="todo"></md-input>
       </md-input-container>
-      <md-button @click.native="add" class="md-primary md-icon-button md-raised">
+      <md-button @click.native="addTodo" class="md-primary md-icon-button md-raised">
       <!-- <md-button @click.native="todo && addTodo(todo)" class="md-primary md-icon-button md-raised"> -->
         <md-icon>add</md-icon>
       </md-button>
@@ -17,11 +17,11 @@
       <md-list-item>
         <span :class="{delete: todo.done }">{{todo.content}}</span>
         <div>
-          <md-button @click.native="toggleTodo(index)" class="md-icon-button md-raised">
+          <md-button @click.native="TOGGLE_TODO(index)" class="md-icon-button md-raised">
             <md-icon v-if="todo.done">restore</md-icon>
             <md-icon v-else>done</md-icon>
           </md-button>
-          <md-button @click.native="deleteTodo(index)" class="md-icon-button md-raised md-warn">
+          <md-button @click.native="DELETE_TODO(index)" class="md-icon-button md-raised md-warn">
             <md-icon>delete_forever</md-icon>
           </md-button>
         </div>
@@ -36,6 +36,7 @@
     mapActions,
     mapState,
   } from 'vuex'
+  import * as types from '../store/mutations_type';
 
   export default {
     name: 'todo',
@@ -58,16 +59,12 @@
 
     methods: {
 
-      add() {
-        this.todo && this.addTodo(this.todo);
+      addTodo() {
+        this.todo && this.ADD_TODO(this.todo);
         this.todo = '';
       },
 
-      ...mapActions([
-        'addTodo',
-        'deleteTodo',
-        'toggleTodo',
-      ]),
+      ...mapActions(types),
     },
   };
 
