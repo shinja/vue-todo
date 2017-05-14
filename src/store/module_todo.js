@@ -1,51 +1,60 @@
+// import Vue from 'vue';
+import Resource from '@/resources/resource_todo';
 import * as types from './mutations_type';
 
 const state = {
   todos: [
-    {
-      content: 'vue.js 2.0',
-      done: true,
-    },
-    {
-      content: 'vuex 2.0',
-      done: false,
-    },
-    {
-      content: 'vue-router 2.0',
-      done: false,
-    },
-    {
-      content: 'vue-resource 2.0',
-      done: false,
-    },
-    {
-      content: 'webpack',
-      done: false,
-    },
+    // {
+    //   content: 'vue.js 2.0',
+    //   done: true,
+    // },
+    // {
+    //   content: 'vuex 2.0',
+    //   done: false,
+    // },
+    // {
+    //   content: 'vue-router 2.0',
+    //   done: false,
+    // },
+    // {
+    //   content: 'vue-resource 2.0',
+    //   done: false,
+    // },
+    // {
+    //   content: 'webpack',
+    //   done: false,
+    // },
   ],
 };
 
 const actions = {
+  [types.GET_TODO]: ({ commit }) => {
+    commit(
+      types.GET_TODO,
+      Resource.get({
+        userId: 1,
+      }),
+    );
+  },
   [types.ADD_TODO]: ({ commit }, payload) => {
-    commit('START_LOADING'); // should move to fetch API.
     commit(
       types.ADD_TODO,
-      new Promise((resolve) => {
-        setTimeout(() => {
-          commit('STOP_LOADING'); // should move to fetch API.
-          resolve(payload);
-        }, 1000);
-      }),
+      Resource.save(
+        {},
+        {
+          title: payload,
+          body: payload,
+          userId: 1,
+        },
+      ),
     );
   },
 
   [types.DELETE_TODO]: ({ commit }, index) => {
-    commit('START_LOADING');
     commit(
       types.DELETE_TODO,
       new Promise((resolve) => {
         setTimeout(() => {
-          commit('STOP_LOADING');
           resolve(index);
         }, 1000);
       }),
@@ -53,12 +62,10 @@ const actions = {
   },
 
   [types.TOGGLE_TODO]: ({ commit }, index) => {
-    commit('START_LOADING');
     commit(
       types.TOGGLE_TODO,
       new Promise((resolve) => {
         setTimeout(() => {
-          commit('STOP_LOADING');
           resolve(index);
         }, 1000);
       }),
@@ -67,14 +74,25 @@ const actions = {
 };
 
 const mutations = {
+  /** GET_TODO */
+  [types.GET_TODO]: () => {},
+  [`${types.GET_TODO}_SUCCEEDED`]: (s, payload) => {
+    state.todos = payload.data.map(d => ({ content: d.title, done: false }));
+  },
+  [`${types.GET_TODO}_FAILED`]: (s, err) => {
+    console.log(err);
+  },
+
   /** ADD_TODO */
   [types.ADD_TODO]: () => {},
   [`${types.ADD_TODO}_SUCCEEDED`]: (s, payload) => {
     s.todos.push({
-      content: payload,
+      content: payload.data.title,
     });
   },
-  [`${types.ADD_TODO}_FAILED`]: () => {},
+  [`${types.ADD_TODO}_FAILED`]: (s, err) => {
+    console.log(err);
+  },
 
   /** DLETE_TODO*/
   [types.DELETE_TODO]: () => {},

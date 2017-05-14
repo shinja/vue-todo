@@ -35,11 +35,17 @@
     mapGetters,
     mapActions,
     mapState,
-  } from 'vuex'
-  import * as types from '../store/mutations_type';
+  } from 'vuex';
+
+  import * as types from '@/store/mutations_type';
 
   export default {
     name: 'todo',
+
+    mounted() {
+      console.log('Todo mounted');
+      this.GET_TODO();
+    },
 
     data() {
       return {

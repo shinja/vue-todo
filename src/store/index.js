@@ -3,8 +3,8 @@ import Vuex from 'vuex';
 import createLogger from 'vuex/dist/logger';
 import VuexPromiseMiddleware from 'vuex-promise-middleware';
 
-import todo from './TodoModule';
-import ui from './UIModlule';
+import todo from './module_todo';
+import ui from './module_ui';
 
 Vue.use(Vuex);
 
