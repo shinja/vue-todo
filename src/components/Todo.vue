@@ -13,8 +13,8 @@
       </md-button>
     </md-layout>
 
-    <md-list v-for="(todo, index) in todos">
-      <md-list-item>
+    <md-list>
+      <md-list-item v-for="(todo, index) in todos">
         <span :class="{delete: todo.done }">{{todo.content}}</span>
         <div>
           <md-button @click.native="TOGGLE_TODO(index)" class="md-icon-button md-raised">
