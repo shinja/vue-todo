@@ -8,7 +8,7 @@
         <md-input v-model="todo"></md-input>
       </md-input-container>
       <md-button @click.native="addTodo" class="md-primary md-icon-button md-raised">
-      <!-- <md-button @click.native="todo && addTodo(todo)" class="md-primary md-icon-button md-raised"> -->
+        <!-- <md-button @click.native="todo && addTodo(todo)" class="md-primary md-icon-button md-raised"> -->
         <md-icon>add</md-icon>
       </md-button>
     </md-layout>
@@ -31,55 +31,54 @@
 </template>
 
 <script>
-  import {
-    mapGetters,
-    mapActions,
-    mapState,
-  } from 'vuex';
+import {
+  mapGetters,
+  mapActions,
+  mapState,
+} from 'vuex';
 
-  import * as types from '@/store/mutations_type';
+import * as types from '@/store/mutations_type';
 
-  export default {
-    name: 'todo',
+export default {
+  name: 'todo',
 
-    mounted() {
-      console.log('Todo mounted');
-      this.GET_TODO();
+  mounted() {
+    console.log('Todo mounted');
+    this.GET_TODO();
+  },
+
+  data() {
+    return {
+      todo: '',
+    };
+  },
+
+  computed: {
+    ...mapGetters({
+      count: 'getTodoCount',
+      doneConut: 'getDoneCount',
+    }),
+    ...mapState({
+      todos: state => state.todo.todos,
+    }), // can NOT put in data
+  },
+
+  methods: {
+
+    addTodo() {
+      if (this.todo) this.ADD_TODO(this.todo);
+      this.todo = '';
     },
 
-    data() {
-      return {
-        todo: '',
-      }
-    },
-
-    computed: {
-      ...mapGetters({
-        count: 'getTodoCount',
-        doneConut: 'getDoneCount',
-      }),
-      ...mapState({
-        todos: (state) => state.todo.todos
-      }) //can NOT put in data
-    },
-
-    methods: {
-
-      addTodo() {
-        this.todo && this.ADD_TODO(this.todo);
-        this.todo = '';
-      },
-
-      ...mapActions(types),
-    },
-  };
+    ...mapActions(types),
+  },
+};
 
 </script>
 
 <style lang="css" scoped>
-  .delete {
-    text-decoration: line-through;
-    color: #ccc;
-  }
-
+.delete {
+  text-decoration: line-through;
+  color: #ccc;
+}
 </style>
